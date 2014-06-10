@@ -11,5 +11,6 @@ package slowkouk.models;
  * @author Administrator
  */
 public class Language {
+   private String languageName;
     
 }

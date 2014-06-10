@@ -1,0 +1,35 @@
+Tue Jun 10 15:29:16 CEST 2014 : Apache Derby Network Server - 10.9.1.0 - (1344872) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Tue Jun 10 15:29:16 CEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-0146-85f7-ee4c-000032fb2add 
+on database directory C:\Users\inf106614\.netbeans-derby\Slowkouk  with class loader sun.misc.Launcher$AppClassLoader@779c86c5 
+Loaded from file:/C:/software/glassfish-4.0/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_45-b18
+user.dir=C:\software\glassfish-4.0\javadb
+derby.system.home=C:\Users\inf106614\.netbeans-derby
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Jun 10 15:29:17 CEST 2014:
+Shutting down instance a816c00e-0146-85f7-ee4c-000032fb2add on database directory C:\Users\inf106614\.netbeans-derby\Slowkouk with class loader sun.misc.Launcher$AppClassLoader@779c86c5 
+Tue Jun 10 15:29:17 CEST 2014 Thread[DRDAConnThread_4,5,main] (DATABASE = Slowkouk), (DRDAID = {2}), Database 'Slowkouk' shutdown.
+----------------------------------------------------------------
+Tue Jun 10 15:29:22 CEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance 45b300a8-0146-85f7-ee4c-000032fb2add 
+on database directory C:\Users\inf106614\.netbeans-derby\Slowkouk  with class loader sun.misc.Launcher$AppClassLoader@779c86c5 
+Loaded from file:/C:/software/glassfish-4.0/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_45-b18
+user.dir=C:\software\glassfish-4.0\javadb
+derby.system.home=C:\Users\inf106614\.netbeans-derby
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Jun 10 15:29:32 CEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance 292a80bc-0146-85f7-ee4c-000032fb2add 
+on database directory C:\Users\inf106614\.netbeans-derby\sample  with class loader sun.misc.Launcher$AppClassLoader@779c86c5 
+Loaded from file:/C:/software/glassfish-4.0/javadb/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_45-b18
+user.dir=C:\software\glassfish-4.0\javadb
+derby.system.home=C:\Users\inf106614\.netbeans-derby
+Database Class Loader started - derby.database.classpath=''

@@ -6,10 +6,13 @@
 
 package slowkouk.models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Administrator
  */
 public class Category {
-    
+    private String categoryName;
+    private ArrayList<Word> wordList;
 }
