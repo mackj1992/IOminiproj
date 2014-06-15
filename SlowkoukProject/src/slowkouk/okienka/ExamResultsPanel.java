@@ -23,6 +23,8 @@ public class ExamResultsPanel extends javax.swing.JPanel {
     public ExamResultsPanel(Exam ex) {
         this.exam=ex;
         initComponents();
+        //todo: Wpisz wyniki do jTextArea1 (można by przekazać jako paramert, bądź ustawiać w exam a tu dodać get-a
+        
     }
 
     /**
@@ -105,8 +107,8 @@ public class ExamResultsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        //Pwtórz exam, wywołaj na exam pierwszy label (ExamSettingsPanel)
+        
+        //Powtórz exam, wywołaj na exam pierwszy label (ExamSettingsPanel)
         exam.repeat();
         
     }//GEN-LAST:event_jButton2ActionPerformed

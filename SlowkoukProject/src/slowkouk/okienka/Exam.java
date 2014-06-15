@@ -130,9 +130,6 @@ public class Exam extends javax.swing.JFrame {
     public static void startQuestions(){
         //todo: przyjęcie jako parametr języka i zestawu słówek.
         
-        //wywalenie aktualnego panelu
-        
-        //utworzenie kolejnego panelu (ExamPanel)
         ExamPanel question = new ExamPanel(exam);
         if(quest!=null)exam.remove(quest);
         quest=question;
@@ -147,11 +144,9 @@ public class Exam extends javax.swing.JFrame {
     }
     
     public static void showResults(){
-        //todo: przyjęcie jako parametr języka i zestawu słówek.
+        //todo: wyciągnięcie z quest Stringów na pytania (może być osobna metoda).
         
-        //wywalenie aktualnego panelu
-        
-        //utworzenie kolejnego panelu (ExamPanel)
+        //todo: podanie do results parametru z wynikami z quest
         ExamResultsPanel result = new ExamResultsPanel(exam);
         if(res!=null)exam.remove(res);
         res=result;

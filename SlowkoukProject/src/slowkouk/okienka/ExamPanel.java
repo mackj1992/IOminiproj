@@ -22,6 +22,8 @@ public class ExamPanel extends javax.swing.JPanel {
     public ExamPanel(Exam exm) {
         this.exam=exm;
         initComponents();
+        //todo: wpisz do jLabel2 pierwsze słowo-pytanie
+        
     }
 
     /**
@@ -106,7 +108,8 @@ public class ExamPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // todo: Zapisanie odpowiedzi, + pobranie nowego pytania. 
+        // todo: Zapisanie odpowiedzi, + pobranie nowego pytania.
+        // todo: wpisz nowe słowo-pytanie w jLabel2
         //Jeżeli ostanie (pytanie == null) to przekaż wyniki, utwórz panel result
         
         exam.showResults();
