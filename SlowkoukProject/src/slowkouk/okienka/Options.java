@@ -4,18 +4,17 @@
  */
 package slowkouk.okienka;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import slowkouk.database.Database;
+import slowkouk.exceptions.DatabaseException;
+
 /**
  *
  * @author inf106634
  */
 public class Options extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Options
-     */
-    public Options() {
-        initComponents();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +40,11 @@ public class Options extends javax.swing.JFrame {
 
         jLabel2.setText("Jezyk : ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,6 +82,10 @@ public class Options extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -113,14 +120,31 @@ public class Options extends javax.swing.JFrame {
             }
         });
     }
-    
-    public static void start(){
-        new Options().setVisible(true);
-    }
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+    public static void start() {
+        new Options().setVisible(true);
+    }
+
+    /**
+     * Creates new form Options
+     */
+    public Options() {
+        initComponents();
+        Database db;
+        ArrayList languages = new ArrayList<String>();
+        try {
+            languages = Database.getInstance().selectLanguages();
+        } catch (DatabaseException ex) {
+            Logger.getLogger(Options.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < languages.size(); i++) {
+            jComboBox1.addItem(languages.get(i));
+        }
+    }
 }

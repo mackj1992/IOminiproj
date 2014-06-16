@@ -4,11 +4,16 @@
  */
 package slowkouk.okienka;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import slowkouk.database.Database;
+import slowkouk.exceptions.DatabaseException;
+import slowkouk.models.WordSet;
+
 /*
  * JPANEL SIZES: 620 x 435
  */
-
-
 /**
  *
  * @author inf106634
@@ -16,17 +21,6 @@ package slowkouk.okienka;
 public class ExamSettingsPanel extends javax.swing.JPanel {
 
     private Exam exam;
-    
-    /**
-     * Creates new form ExamSettingsPanel
-     */
-    public ExamSettingsPanel(Exam exm) {
-        this.exam=exm;
-        initComponents();
-        
-        //todo: Dodać opcje Combobox 1 i 2
-        
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,11 +42,7 @@ public class ExamSettingsPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Exam Settings Panel");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel2.setText("Jezyk : ");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setText("Zestaw slowek : ");
 
@@ -117,13 +107,18 @@ public class ExamSettingsPanel extends javax.swing.JPanel {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-        
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-        //todo: przekazać język i zestaw:
-       exam.startQuestions();
-        
-        
+
+        String language = (String) jComboBox1.getSelectedItem();
+        try {
+            WordSet setToTest = Database.getInstance().selectWordSet((String) jComboBox2.getSelectedItem());
+        } catch (DatabaseException ex) {
+            Logger.getLogger(ExamSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        exam.startQuestions();
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -140,4 +135,28 @@ public class ExamSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Creates new form ExamSettingsPanel
+     */
+    public ExamSettingsPanel(Exam exm) {
+        this.exam = exm;
+        initComponents();
+        ArrayList languages = new ArrayList<String>();
+        ArrayList wordSets = new ArrayList<String>();
+        try {
+            languages = Database.getInstance().selectLanguages();
+            wordSets = Database.getInstance().selectWordSetsNames();
+        } catch (DatabaseException ex) {
+            Logger.getLogger(Options.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int i = 0; i < languages.size(); i++) {
+            jComboBox1.addItem(languages.get(i));
+        }
+        for (int i = 0; i < wordSets.size(); i++) {
+            jComboBox2.addItem(wordSets.get(i));
+        }
+        //todo: Dodać opcje Combobox 1 i 2
+
+    }
+
 }

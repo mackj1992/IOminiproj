@@ -9,21 +9,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import slowkouk.exceptions.DatabaseException;
 import slowkouk.interfaces.DatabaseInterface;
 import slowkouk.models.Word;
 import slowkouk.models.WordSet;
 
-
-
-
-class DatabaseException extends Exception{
-}
 /**
  *
  * @author inf106614
  */
+
+//JEŚLI GDZIEKOLWIEK SĄ TU NAPISANE JAKOŚ CIAŁA METOD, OGARNIJ JE BY DZIAŁAŁY Z BAZY
+
 public class Database implements DatabaseInterface{
     
     private static Database instance= null;
@@ -31,7 +31,9 @@ public class Database implements DatabaseInterface{
     Connection connection = null;
    
     private Database() throws DatabaseException {
-        try {
+        //RAFIKSIE ODKOMENTUJ TO POTEM, KOMENTŁEM SE DO TESTÓW
+            
+        /**try {
             connect();
             
         } catch (ClassNotFoundException ex) {
@@ -40,7 +42,7 @@ public class Database implements DatabaseInterface{
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException();
-        }
+        }*/
     }
    
     public static Database getInstance() throws DatabaseException {
@@ -135,23 +137,50 @@ public class Database implements DatabaseInterface{
     }
 
     @Override
-    public void selectWordsWithLang(String lang) {
+    public ArrayList<Word> selectWordsWithLang(String lang) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void selectWordSetWithLang(String lang) {
+    public ArrayList<Word> selectWordSetWithLang(String lang) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void selectWord(int id) {
+    public Word selectWord(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void selectWordWithCategory(String category) {
+    public Word selectWord(String caption) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public ArrayList<Word> selectWordsWithCategory(String category) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<String> selectLanguages() {
+        ArrayList test = new ArrayList<String>();
+        test.add("xD");
+        return test;
+    }
+
+    @Override
+    public WordSet selectWordSet(String name) {
+        return new WordSet();
+    }
+
+    @Override
+    public ArrayList<String> selectWordSetsNames() {
+        ArrayList test = new ArrayList<String>();
+        test.add("xB");
+        test.add("xP");
+        return test;
+    }
+
+
     
 }

@@ -4,6 +4,7 @@
  */
 package slowkouk.interfaces;
 
+import java.util.ArrayList;
 import slowkouk.models.Word;
 import slowkouk.models.WordSet;
 
@@ -22,10 +23,14 @@ public interface DatabaseInterface {
     public void updateWord(Word w);
     public void updateWordSet(WordSet ws);
     
-    public void selectWordsWithLang(String lang);
-    public void selectWordSetWithLang(String lang);
+    public ArrayList<Word> selectWordsWithLang(String lang);
+    public ArrayList<Word> selectWordSetWithLang(String lang);
     
-    public void selectWord(int id);
-    public void selectWordWithCategory(String category);
+    public Word selectWord(int id);
+    public Word selectWord(String caption);
+    public ArrayList<Word> selectWordsWithCategory(String category);
+    public WordSet selectWordSet(String name);
+    public ArrayList<String> selectWordSetsNames();
     
+    public ArrayList<String> selectLanguages();
 }
