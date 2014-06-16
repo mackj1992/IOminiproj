@@ -178,25 +178,58 @@ public class Database implements DatabaseInterface{
 
     @Override
     public WordSet selectWordSet(String name) {
-        return new WordSet();
+         try {
+            WordSet set = new WordSet();
+            
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    " select dst.name as dstName, src.name as srcName,  ws.name as setName "
+                    + " from wordSets ws LEFT OUTER JOIN languages src ON mainLang_id=src._id "
+                    + " LEFT OUTER JOIN languages dst ON destinationLang_id=dst._id "
+                    + " where ws.name='" + name + "' ");
+            
+              set.setDestinationLang(rs.getString("dstName"));
+              set.setMainLang(rs.getString("srcName"));
+              set.setName(rs.getString("setName"));
+            
+            ArrayList<Word> words = new ArrayList<>();
+            words.addAll(selectWordsWithWordSet(set));
+            set.setWords(words);
+            
+            return set;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
     public List<WordSet> selectWordSets() {
-        final WordSet ws = new WordSet(new ArrayList<Word>(), "testowy zestaw","jezyk1","jezyk2");
-        final WordSet ws2 = new WordSet(new ArrayList<Word>(), "testowy zestaw2","jezyk1","jezyk2");
-        final WordSet ws3 = new WordSet(new ArrayList<Word>(), "testowy zestaw3","jezyk1","jezyk2");
-        final WordSet ws4 = new WordSet(new ArrayList<Word>(), "testowy zestaw4","jezyk1","jezyk2");
-        
-        
-        return new ArrayList(){
-            {
-                add(ws);
-                add(ws2);
-                add(ws3);
-                add(ws4);
+        try {
+            List<WordSet> setList = new ArrayList<WordSet>();
+
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    " select dst.name as dstName, src.name as srcName,  ws.name as setName "
+                    + " from wordSets ws LEFT OUTER JOIN languages src ON mainLang_id=src._id "
+                    + " LEFT OUTER JOIN languages dst ON destinationLang_id=dst._id ");
+            while (rs.next()) {
+                WordSet set = new WordSet();
+                set.setDestinationLang(rs.getString("dstName"));
+                set.setMainLang(rs.getString("srcName"));
+                set.setName(rs.getString("setName"));
+
+                ArrayList<Word> words = new ArrayList<>();
+                words.addAll(selectWordsWithWordSet(set));
+                set.setWords(words);
+
+                setList.add(set);
             }
-        };
+            return setList;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
