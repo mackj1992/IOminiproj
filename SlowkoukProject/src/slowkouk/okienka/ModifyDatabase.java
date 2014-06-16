@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import slowkouk.database.Database;
 import slowkouk.exceptions.DatabaseException;
 import slowkouk.models.Language;
+import slowkouk.models.Word;
 
 /**
  *
@@ -159,9 +160,25 @@ public class ModifyDatabase extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+    
         //todo: Dodaj słówko z jTextField1 (język w jComboBox1) z tłumaczeniem z jTextField2 (jęz w jCombobox2)
         
+        Object language = jComboBox1.getSelectedItem();
+        Object languageTrans = jComboBox2.getSelectedItem();
+        
+        
+        Word noweSlowo = new Word(jTextField1.getText(), (Language) language);
+        Word noweTlumaczenie = new Word(jTextField1.getText(), (Language) language);
+        
+        noweSlowo.addTranslation(noweTlumaczenie);
+       
+        try {
+            //todo: do databazy!
+            Database.getInstance().insertWord(noweSlowo);
+        } catch (DatabaseException ex) {
+            Logger.getLogger(ModifyDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
