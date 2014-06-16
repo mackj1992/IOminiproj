@@ -11,12 +11,28 @@ import java.util.ArrayList;
  * @author inf106614
  */
 public class WordSet {
-
     private ArrayList<Word> words;
     private String name;
     private String mainLang;
     private String destinationLang;
+    
+    public WordSet(ArrayList<Word> words, String name, String mainLang, String destinationLang){
+        this.words = words;
+        this.name = name;
+        this.mainLang = mainLang;
+        this.destinationLang = destinationLang;
+    }
+    
+    public WordSet(){
+    }
+    
+    public String toString(){
+        return getName();
+    }
 
+    /**
+     * @return the words
+     */
     public ArrayList<Word> getWords() {
         return words;
     }
@@ -69,4 +85,6 @@ public class WordSet {
     public void setDestinationLang(String destinationLang) {
         this.destinationLang = destinationLang;
     }
+    
+    
 }

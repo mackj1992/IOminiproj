@@ -12,5 +12,32 @@ package slowkouk.models;
  */
 public class Language {
    private String languageName;
-    
+   
+   public Language(){
+       
+   }
+   
+   public Language(String languageName){
+       this.languageName = languageName;
+   }
+   
+   public String toString(){
+       return getLanguageName();
+   }
+
+    /**
+     * @return the languageName
+     */
+    public String getLanguageName() {
+        return languageName;
+    }
+
+    /**
+     * @param languageName the languageName to set
+     */
+    public void setLanguageName(String languageName) {
+        this.languageName = languageName;
+    }
+   
+   
 }

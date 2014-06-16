@@ -4,6 +4,10 @@
  */
 package slowkouk.okienka;
 
+import slowkouk.models.Answer;
+import slowkouk.models.Exam;
+import slowkouk.models.Word;
+
 /*
  * JPANEL SIZES: 620 x 435
  */
@@ -14,16 +18,41 @@ package slowkouk.okienka;
  */
 public class ExamPanel extends javax.swing.JPanel {
 
+    private ExamFrame examFrame;
     private Exam exam;
+    private Word currentWord;
     
     /**
      * Creates new form ExamPanel
      */
-    public ExamPanel(Exam exm) {
-        this.exam=exm;
+    public ExamPanel(ExamFrame exm, Exam exam) {
+        this.examFrame=exm;
+        this.exam = exam;
+        
+        
+        
         initComponents();
         //todo: wpisz do jLabel2 pierwsze słowo-pytanie
         
+        jLabel4.setText(exam.getLanguage().getLanguageName());
+        showNextWord();
+        
+    }
+    
+    public void repeatExam(){
+        exam.repeatExam();
+    }
+    
+    private void showNextWord(){
+        currentWord = exam.getNextWord();
+        
+        if(currentWord == null){
+            examFrame.showResults(exam.getResults());
+            return;
+        }
+
+        jLabel2.setText(currentWord.getCaption());
+        jTextField1.setText("");
     }
 
     /**
@@ -40,6 +69,7 @@ public class ExamPanel extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Exam Panel");
@@ -62,7 +92,7 @@ public class ExamPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("Przetłumacz słowo na : language");
+        jLabel3.setText("Przetłumacz słowo na:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -83,7 +113,9 @@ public class ExamPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(229, 229, 229)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -92,7 +124,9 @@ public class ExamPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(50, 50, 50)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -111,8 +145,12 @@ public class ExamPanel extends javax.swing.JPanel {
         // todo: Zapisanie odpowiedzi, + pobranie nowego pytania.
         // todo: wpisz nowe słowo-pytanie w jLabel2
         //Jeżeli ostanie (pytanie == null) to przekaż wyniki, utwórz panel result
+        String answerString = jTextField1.getText();
+        Answer answer = new Answer(answerString, currentWord);
+        exam.addAnswer(answer);
+        showNextWord();
         
-        exam.showResults();
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -121,6 +159,7 @@ public class ExamPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

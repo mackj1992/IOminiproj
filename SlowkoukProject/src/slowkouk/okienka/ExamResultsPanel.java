@@ -4,6 +4,8 @@
  */
 package slowkouk.okienka;
 
+import java.util.List;
+
 /*
  * JPANEL SIZES: 620 x 435
  * RESULTS TEXT AREA: 594 x 345
@@ -15,16 +17,20 @@ package slowkouk.okienka;
  */
 public class ExamResultsPanel extends javax.swing.JPanel {
 
-    private Exam exam;
+    private ExamFrame exam;
     
     /**
      * Creates new form ExamResultsPanel
      */
-    public ExamResultsPanel(Exam ex) {
+    public ExamResultsPanel(ExamFrame ex, List<String> examResults) {
         this.exam=ex;
         initComponents();
         //todo: Wpisz wyniki do jTextArea1 (można by przekazać jako paramert, bądź ustawiać w exam a tu dodać get-a
-        
+        StringBuffer sb = new StringBuffer();
+        for(String result: examResults){
+            sb.append(result);
+        }
+        jTextArea1.setText(sb.toString());
     }
 
     /**
@@ -46,7 +52,7 @@ public class ExamResultsPanel extends javax.swing.JPanel {
         jLabel1.setText("Exam Results Panel");
 
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Calibri", 0, 10)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextArea1.setRows(9);
         jTextArea1.setToolTipText("");
         jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

@@ -5,10 +5,12 @@
 package slowkouk.okienka;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import slowkouk.database.Database;
 import slowkouk.exceptions.DatabaseException;
+import slowkouk.models.Language;
 
 /**
  *
@@ -137,7 +139,7 @@ public class Options extends javax.swing.JFrame {
     public Options() {
         initComponents();
         Database db;
-        ArrayList languages = new ArrayList<String>();
+        List<Language> languages = new ArrayList();
         try {
             languages = Database.getInstance().selectLanguages();
         } catch (DatabaseException ex) {

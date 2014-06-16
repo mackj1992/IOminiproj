@@ -10,10 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import slowkouk.exceptions.DatabaseException;
 import slowkouk.interfaces.DatabaseInterface;
+import slowkouk.models.Language;
 import slowkouk.models.Word;
 import slowkouk.models.WordSet;
 
@@ -162,10 +164,18 @@ public class Database implements DatabaseInterface{
     }
 
     @Override
-    public ArrayList<String> selectLanguages() {
-        ArrayList test = new ArrayList<String>();
-        test.add("xD");
-        return test;
+    public List<Language> selectLanguages() {
+        List<Language> list = new ArrayList(){
+                {
+                    add(new Language("lang1"));
+                    add(new Language("lang2"));
+                    add(new Language("lang3"));
+                    add(new Language("lang4"));
+                }
+        };
+        
+        
+        return list;
     }
 
     @Override
@@ -174,11 +184,42 @@ public class Database implements DatabaseInterface{
     }
 
     @Override
-    public ArrayList<String> selectWordSetsNames() {
-        ArrayList test = new ArrayList<String>();
-        test.add("xB");
-        test.add("xP");
-        return test;
+    public List<WordSet> selectWordSets() {
+        final WordSet ws = new WordSet(new ArrayList<Word>(), "testowy zestaw","jezyk1","jezyk2");
+        final WordSet ws2 = new WordSet(new ArrayList<Word>(), "testowy zestaw2","jezyk1","jezyk2");
+        final WordSet ws3 = new WordSet(new ArrayList<Word>(), "testowy zestaw3","jezyk1","jezyk2");
+        final WordSet ws4 = new WordSet(new ArrayList<Word>(), "testowy zestaw4","jezyk1","jezyk2");
+        
+        
+        return new ArrayList(){
+            {
+                add(ws);
+                add(ws2);
+                add(ws3);
+                add(ws4);
+            }
+        };
+    }
+
+    @Override
+    public List<Word> selectWordsWithWordSet(WordSet wordSet) {
+        Language lang1 = new Language("lang1");
+        final Word w = new Word("test", lang1);
+        w.addTranslation(w);
+        
+        final Word w2 = new Word("test2", lang1);
+        w2.addTranslation(w2);
+        
+        final Word w3 = new Word("test3", lang1);
+        w3.addTranslation(w3);
+        
+        return new ArrayList(){
+            {
+                add(w);
+                add(w2);
+                add(w3);
+            }
+        };
     }
 
 

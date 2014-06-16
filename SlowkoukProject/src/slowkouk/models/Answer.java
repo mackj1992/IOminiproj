@@ -21,6 +21,10 @@ public class Answer {
 		this.answer = answer;
 		this.word = word;
 	}
+        
+        public String toString(){
+            return answer;
+        }
 	
 	public String getAnswer() {
 		return answer;

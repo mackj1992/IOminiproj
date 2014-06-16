@@ -4,6 +4,11 @@
  */
 package slowkouk.okienka;
 
+import java.util.List;
+import slowkouk.models.Exam;
+import slowkouk.models.Language;
+import slowkouk.models.WordSet;
+
 /*
  * JFRAME SIZES: 640 x 480
  */
@@ -12,17 +17,17 @@ package slowkouk.okienka;
  *
  * @author inf106634
  */
-public class Exam extends javax.swing.JFrame {
+public class ExamFrame extends javax.swing.JFrame {
 
-    private static Exam exam;
-    private static ExamSettingsPanel set;
-    private static ExamPanel quest;
-    private static ExamResultsPanel res;
+    private static ExamFrame examFrame;
+    private static ExamSettingsPanel settingsPanel;
+    private static ExamPanel examPanel;
+    private static ExamResultsPanel resultsPanel;
     
     /**
      * Creates new form Exam
      */
-    public Exam() {
+    public ExamFrame() {
         initComponents();
     }
 
@@ -79,31 +84,27 @@ public class Exam extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Exam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExamFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Exam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExamFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Exam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExamFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Exam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExamFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Exam examFrame = new Exam();
-                exam = examFrame;
-                ExamSettingsPanel Settings = new ExamSettingsPanel(exam);
-                set=Settings;
-                //Settings.setAlignmentX(10);
-                //Settings.setAlignmentY(35);
+                examFrame = new ExamFrame();
+                settingsPanel = new ExamSettingsPanel(examFrame);
                 
-                Settings.setBounds(10, 35, 620, 435);
-                Settings.setVisible(true);
+                settingsPanel.setBounds(10, 35, 620, 435);
+                settingsPanel.setVisible(true);
                 
                 examFrame.setVisible(true);
-                examFrame.add(Settings);
+                examFrame.add(settingsPanel);
                 
                 
             }
@@ -112,61 +113,59 @@ public class Exam extends javax.swing.JFrame {
     }
     //ten run coś nawalał jak puszczałem z pozycji menu, to dodałem start
     public static void start(){
-        Exam examFrame = new Exam();
-        exam = examFrame;
-        ExamSettingsPanel Settings = new ExamSettingsPanel(exam);
-        set=Settings;
+        examFrame = new ExamFrame();
+        settingsPanel = new ExamSettingsPanel(examFrame);
                 //Settings.setAlignmentX(10);
                 //Settings.setAlignmentY(35);
                 
-                set.setBounds(10, 35, 620, 435);
-                set.setVisible(true);
+                settingsPanel.setBounds(10, 35, 620, 435);
+                settingsPanel.setVisible(true);
                 
-                exam.setVisible(true);
-                exam.add(set);
+                examFrame.setVisible(true);
+                examFrame.add(settingsPanel);
     
     }
     
-    public static void startQuestions(){
+    public static void startQuestions(Language language, WordSet set){
         //todo: przyjęcie jako parametr języka i zestawu słówek.
+        Exam exam = new Exam(language, set);
         
-        ExamPanel question = new ExamPanel(exam);
-        if(quest!=null)exam.remove(quest);
-        quest=question;
-        quest.setBounds(10, 35, 620, 435);
-        quest.setVisible(true);
+        if(examPanel!=null)examFrame.remove(examPanel);
+        examPanel = new ExamPanel(examFrame, exam);
+        examPanel.setBounds(10, 35, 620, 435);
+        examPanel.setVisible(true);
         //chowam poprzedni panel
-        set.setVisible(false);
-        exam.setVisible(true);
-        exam.add(quest);
+        settingsPanel.setVisible(false);
+        examFrame.setVisible(true);
+        examFrame.add(examPanel);
         
         
     }
     
-    public static void showResults(){
+    public static void showResults(List<String> examResults){
         //todo: wyciągnięcie z quest Stringów na pytania (może być osobna metoda).
         
         //todo: podanie do results parametru z wynikami z quest
-        ExamResultsPanel result = new ExamResultsPanel(exam);
-        if(res!=null)exam.remove(res);
-        res=result;
-        res.setBounds(10, 35, 620, 435);
-        res.setVisible(true);
+        ExamResultsPanel result = new ExamResultsPanel(examFrame, examResults);
+        if(resultsPanel!=null)examFrame.remove(resultsPanel);
+        resultsPanel=result;
+        resultsPanel.setBounds(10, 35, 620, 435);
+        resultsPanel.setVisible(true);
         //chowam poprzedni panel
-        quest.setVisible(false);
-        exam.setVisible(true);
-        exam.add(res);
+        examPanel.setVisible(false);
+        examFrame.setVisible(true);
+        examFrame.add(resultsPanel);
         
         
     }
     
      public static void repeat(){
                 
-                res.setVisible(false);
-                set.setVisible(true);
-                
-                exam.setVisible(true);
-                exam.repaint();
+                resultsPanel.setVisible(false);
+                settingsPanel.setVisible(true);
+                examPanel.repeatExam();
+                examFrame.setVisible(true);
+                examFrame.repaint();
     
     }
     

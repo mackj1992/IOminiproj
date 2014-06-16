@@ -15,6 +15,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import slowkouk.database.Database;
+import slowkouk.exceptions.DatabaseException;
 
 public class Exam {
 	
@@ -33,12 +37,12 @@ public class Exam {
 	 * @param language z ktorego jest egzamin
 	 * @param category zestaw slowek
 	 */
-	public Exam(){
+	public Exam(Language language, WordSet wordSet){
 		//todo tworzenie okienka do wyboru language i tematu, ktore ustawi language i category
-		
-		generateWords();
-		
-		showExamWindow();
+            this.language = language;
+            generateWords(wordSet);
+            results = new ArrayList();
+            answers = new ArrayList();
 	}
 	
 	/**
@@ -54,7 +58,7 @@ public class Exam {
 		
 	}
 	
-	private void repeatExam(){
+	public void repeatExam(){
 		Collections.shuffle(words);
 		wordIterator = words.iterator();
 		answers.clear();
@@ -64,9 +68,13 @@ public class Exam {
 	/**
 	 * Generowanie listy slowek z bazy na podstawie zestawu i jezyka
 	 */
-	public void generateWords(){
-		//todo pobranie bazy slowek na podstawie zestawu i jezyka
-		words = new ArrayList<>();
+	private void generateWords(WordSet wordSet){
+            try {
+                //todo pobranie bazy slowek na podstawie zestawu i jezyka
+                words = Database.getInstance().selectWordsWithWordSet(wordSet);
+            } catch (DatabaseException ex) {
+                Logger.getLogger(Exam.class.getName()).log(Level.SEVERE, null, ex);
+            }
 		Collections.shuffle(words);
 		wordIterator = words.iterator();
 	}
@@ -83,21 +91,11 @@ public class Exam {
 		return results;
 	}
 	
-	/**
-	 * wyswietla pytanie i pobiera odpowiedz
-	 */
-	public void showExamWindow(){
-		
-		
-		Word w = getNextWord();
-		//okienko wyswietlenie slowka w
-	}
-	
 	public String checkAnswer(Answer answer){
 		if(answer.isTranslationCorrect(language)){
-			return String.format("%s - %s - ok \n",answer.getWord(), answer.getAnswer()  );
+			return String.format("%s - %s - ok \n",answer.getWord().toString(), answer.getAnswer()  );
 		}else{
-			return String.format("%s - %s - źle \n",answer.getWord(), answer.getAnswer() );
+			return String.format("%s - %s - źle \n",answer.getWord().toString(), answer.getAnswer() );
 		}
 	}
 

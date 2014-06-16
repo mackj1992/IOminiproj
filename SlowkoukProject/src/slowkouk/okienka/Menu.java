@@ -175,7 +175,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
             // TODO add your handling code here:
-        new Exam().start();
+        new ExamFrame().start();
         
         //this.setEnabled(false);  <- warto by potem dodać blokowanie okienek "z tyłu"
     }//GEN-LAST:event_jButton4ActionPerformed

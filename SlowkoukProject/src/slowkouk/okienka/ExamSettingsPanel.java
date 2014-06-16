@@ -5,10 +5,12 @@
 package slowkouk.okienka;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import slowkouk.database.Database;
 import slowkouk.exceptions.DatabaseException;
+import slowkouk.models.Language;
 import slowkouk.models.WordSet;
 
 /*
@@ -20,7 +22,7 @@ import slowkouk.models.WordSet;
  */
 public class ExamSettingsPanel extends javax.swing.JPanel {
 
-    private Exam exam;
+    private ExamFrame exam;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,13 +112,12 @@ public class ExamSettingsPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String language = (String) jComboBox1.getSelectedItem();
-        try {
-            WordSet setToTest = Database.getInstance().selectWordSet((String) jComboBox2.getSelectedItem());
-        } catch (DatabaseException ex) {
-            Logger.getLogger(ExamSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+        Object language = jComboBox1.getSelectedItem();
+        Object wordSet = jComboBox2.getSelectedItem();
+        if((language instanceof Language)&&(wordSet instanceof WordSet)){
+            exam.startQuestions((Language) language, (WordSet) wordSet);
         }
-        exam.startQuestions();
+        
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -138,22 +139,22 @@ public class ExamSettingsPanel extends javax.swing.JPanel {
     /**
      * Creates new form ExamSettingsPanel
      */
-    public ExamSettingsPanel(Exam exm) {
+    public ExamSettingsPanel(ExamFrame exm) {
         this.exam = exm;
         initComponents();
-        ArrayList languages = new ArrayList<String>();
-        ArrayList wordSets = new ArrayList<String>();
+        List<Language> languages = new ArrayList();
+        List<WordSet> wordSets = new ArrayList();
         try {
             languages = Database.getInstance().selectLanguages();
-            wordSets = Database.getInstance().selectWordSetsNames();
+            wordSets = Database.getInstance().selectWordSets();
         } catch (DatabaseException ex) {
             Logger.getLogger(Options.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = 0; i < languages.size(); i++) {
-            jComboBox1.addItem(languages.get(i));
+        for (Language language : languages) {
+            jComboBox1.addItem(language);
         }
-        for (int i = 0; i < wordSets.size(); i++) {
-            jComboBox2.addItem(wordSets.get(i));
+        for (WordSet wordSet : wordSets) {
+            jComboBox2.addItem(wordSet);
         }
         //todo: Dodać opcje Combobox 1 i 2
 
