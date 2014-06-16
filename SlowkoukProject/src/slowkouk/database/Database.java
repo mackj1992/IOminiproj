@@ -106,7 +106,16 @@ public class Database implements DatabaseInterface{
 */
     @Override
     public void insertWord(Word w) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into words (caption, lang_id) "
+                    + " values ('"+w.getCaption()+"', "
+                    +" (select _id from languages where name='"+w.getLang().getLanguageName()
+                    +" ')"+" )");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
 
     @Override
