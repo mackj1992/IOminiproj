@@ -144,9 +144,51 @@ public class Database implements DatabaseInterface{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * 
+     * @param id
+     * @return word without translation list
+     */
+    private Word getBaseWord(int id) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    "select w._id as id, w.caption as caption , l.name as lang "
+                    + " from words w JOIN languages l "
+                    + "ON lang_id=l._id where w._id=" + id);
+            //if (rs.first()) {
+                Word w = new Word(rs.getString("caption"), new Language(rs.getString("lang")));
+                return w;
+            //}
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+    
     @Override
     public Word selectWord(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            {
+                Word w = getBaseWord(id);
+                if (w == null) {
+                    return null;
+                }
+
+                Statement statement = connection.createStatement();
+                ResultSet translationsList = statement.executeQuery(
+                        "select * from words_translationsList  w_tl where w_tl.word_id=" + id);
+
+                while (translationsList.next()) {
+                    w.addTranslation(getBaseWord(translationsList.getInt("word_id")));
+                }
+                return w;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -234,23 +276,21 @@ public class Database implements DatabaseInterface{
 
     @Override
     public List<Word> selectWordsWithWordSet(WordSet wordSet) {
-        Language lang1 = new Language("lang1");
-        final Word w = new Word("test", lang1);
-        w.addTranslation(w);
-        
-        final Word w2 = new Word("test2", lang1);
-        w2.addTranslation(w2);
-        
-        final Word w3 = new Word("test3", lang1);
-        w3.addTranslation(w3);
-        
-        return new ArrayList(){
-            {
-                add(w);
-                add(w2);
-                add(w3);
+       try {
+            ArrayList<Word> test = new ArrayList<Word>();
+
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(
+                    " select * from words_wordSets where wordSet_id= "
+                    + " (select _id from wordSets where name='"+wordSet.getName()+"')");
+            while (rs.next()) {          
+                test.add(selectWord(rs.getInt("word_id")));
             }
-        };
+            return test;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 
