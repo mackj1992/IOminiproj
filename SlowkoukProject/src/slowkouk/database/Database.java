@@ -33,18 +33,13 @@ public class Database implements DatabaseInterface{
     Connection connection = null;
    
     private Database() throws DatabaseException {
-        //RAFIKSIE ODKOMENTUJ TO POTEM, KOMENTŁEM SE DO TESTÓW
             
-        /**try {
-            connect();
-            
-        } catch (ClassNotFoundException ex) {
+        try {
+            connect();         
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException();
-        } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-            throw new DatabaseException();
-        }*/
+        }
     }
    
     public static Database getInstance() throws DatabaseException {
@@ -60,9 +55,10 @@ public class Database implements DatabaseInterface{
     private void connect() throws ClassNotFoundException, SQLException{
           // load the sqlite-JDBC driver using the current class loader
         Class.forName("org.sqlite.JDBC"); 
-        connection = DriverManager.getConnection("jdbc:sqlite:sample.db");    
+        connection = DriverManager.getConnection("jdbc:sqlite:slowkoukdb.sqlite");    
     }
     
+  /*  
     public void testMethod() throws ClassNotFoundException{
             // load the sqlite-JDBC driver using the current class loader
         Class.forName("org.sqlite.JDBC");
@@ -107,7 +103,7 @@ public class Database implements DatabaseInterface{
       }
     }
     }
-
+*/
     @Override
     public void insertWord(Word w) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -165,17 +161,19 @@ public class Database implements DatabaseInterface{
 
     @Override
     public List<Language> selectLanguages() {
-        List<Language> list = new ArrayList(){
-                {
-                    add(new Language("lang1"));
-                    add(new Language("lang2"));
-                    add(new Language("lang3"));
-                    add(new Language("lang4"));
-                }
-        };
-        
-        
-        return list;
+        try {
+            ArrayList<Language> test = new ArrayList<Language>();
+
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from languages");
+            while (rs.next()) {          
+                test.add(new Language(rs.getString("name")));
+            }
+            return test;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     @Override
