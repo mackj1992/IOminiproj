@@ -27,6 +27,7 @@ public interface DatabaseInterface {
     
     public ArrayList<Word> selectWordsWithLang(String lang);
     public ArrayList<Word> selectWordSetWithLang(String lang);
+    public ArrayList<Word> selectWords();
     
     public Word selectWord(int id);
     public Word selectWord(String caption);

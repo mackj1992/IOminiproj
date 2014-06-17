@@ -25,6 +25,11 @@ public class Word {
         translationsList = new ArrayList();
         categories = new ArrayList();
     }
+    public Word(String caption){
+        this.caption = caption;
+        translationsList = new ArrayList();
+        categories = new ArrayList();
+    }
     
     public String toString() {
         return caption;
